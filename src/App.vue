@@ -19,5 +19,13 @@ export default {
   components: {
     PokeList,
   },
+  data() {
+    return {
+      search: "",
+      results: [],
+      checked: false,
+      loading: false,
+    };
+  },
 };
 </script>

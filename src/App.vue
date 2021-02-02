@@ -1,10 +1,17 @@
 <template>
   <label for="maxCP" class="max-cp">
-    <input type="checkbox" id="maxCP" />
+    <input type="checkbox" id="maxCP" v-model="checked" v-on:click="sortByCp" />
     <small> Maximum Combat Points </small>
   </label>
-  <input type="text" class="input" placeholder="Pokemon or type" />
-  <div class="loader"></div>
+  <input
+    v-model="search"
+    type="text"
+    class="input"
+    placeholder="Pokemon or type"
+  />
+  <div class="loader" v-if="loading"></div>
+  <div v-else></div>
+  <PokeList v-bind:results="results" v-bind:search="search" />
 </template>
 
 <script>

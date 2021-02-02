@@ -27,5 +27,38 @@ export default {
       loading: false,
     };
   },
+  watch: {
+    search: function () {
+      this.getResults();
+    },
+  },
+  methods: {
+    getResults: async function () {
+      if (this.search.length < 1) {
+        this.results = [];
+      } else {
+        this.loading = true;
+        const response = await getPokemon(URL_PATH);
+        const pokemonResults = response.filter((pokemon) => {
+          return (
+            pokemon.Name.toLowerCase().includes(this.search.toLowerCase()) ||
+            pokemon.Types.map((type) => type.toLowerCase()).includes(
+              this.search.toLowerCase()
+            )
+          );
+        });
+        this.results = pokemonResults;
+        this.loading = false;
+      }
+    },
+    sortByCp: function () {
+      this.checked = !this.checked;
+      if (this.checked) {
+        return this.results.sort((a, b) => b.MaxCP - a.MaxCP);
+      } else {
+        return this.results.sort((a, b) => a.MaxCP - b.MaxCP);
+      }
+    },
+  },
 };
 </script>
